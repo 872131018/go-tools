@@ -24,7 +24,7 @@ func main() {
 	defer client.Close()
 
 	fmt.Println("Creating TGZ of file")
-	_, err = session.CombinedOutput("tar -C Sites/ -czf " + archive + " --exclude='.git' --exclude='node_modules' --exclude='vendor' " + project)
+	_, err = session.CombinedOutput("tar -C Sites/ -czf " + archive + " --exclude='.git' --exclude='node_modules' " + project)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -54,7 +54,7 @@ func main() {
 	srcFile.WriteTo(dstFile)
 
 	fmt.Println("Unarchiving project")
-	err = archiver.TarGz.Open(archive, project)
+	err = archiver.Unarchive(archive, project)
 
 	fmt.Println("Deleting archive")
 	err = os.Remove(archive)
